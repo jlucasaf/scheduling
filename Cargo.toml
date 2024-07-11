@@ -1,0 +1,13 @@
+[package]
+name = "scheduling"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+diesel = { version = "2.0", features = ["postgres"] } # ou ["sqlite"] para SQLite
+dotenv = "0.15"
+chrono = "0.4" # Para manipulação de datas e horas
+serde = { version = "1.0", features = ["derive"] } # Para serialização e deserialização
+serde_json = "1.0" # Para trabalhar com JSON
+uuid = { version = "1.0", features = ["v4"] } # Para gerar IDs únicos
+
