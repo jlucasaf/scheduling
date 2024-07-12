@@ -6,4 +6,4 @@ file = "src/schema.rs"
 custom_type_derives = ["diesel::query_builder::QueryId", "Clone"]
 
 [migrations_directory]
-dir = "/Users/joaolucasaraujofranca/projetos/estudos/scheduling/server/migrations"
+dir = "C:\\Users\\Kelven\\DEV\\RUST\\todo-app\\todo_backend\\migrations"

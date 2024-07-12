@@ -1,0 +1,32 @@
+# Estágio 1: Build
+FROM rust AS builder
+
+WORKDIR /app
+
+# Instalando dependências do sistema
+RUN apt-get update && apt-get install -y libpq-dev
+
+# Copiando o código fonte para o contêiner
+COPY . .
+
+# Compilando o código usando Cargo
+RUN rustup default stable
+RUN cargo build --release
+
+# Estágio 2: Runtime
+FROM debian:buster-slim
+
+# Instalando dependências para o aplicativo em tempo de execução
+RUN apt-get update && apt-get install -y libssl-dev ca-certificates && apt-get clean
+
+WORKDIR /app
+
+# Copiando os binários compilados do estágio anterior
+COPY --from=builder /app/target/release/todo_list_backend /usr/local/bin/todo_list_backend
+COPY --from=builder /app/target/release/migrate /usr/local/bin/migrate
+
+# Copiando o arquivo de configuração .env
+COPY .env .
+
+# Comando para iniciar o aplicativo
+CMD ["sh", "-c", "migrate && todo_list_backend"]
