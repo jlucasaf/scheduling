@@ -6,15 +6,10 @@ import { theme } from '@/constants/theme';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Detalhes() {
-    const { id } = useLocalSearchParams();
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [date, setDate] = useState('');
-
-    useEffect(() => {
-        Alert.alert(`${id?.toString()}`)
-    }, [])
-
+    const { id, titulo, desc, data  } = useLocalSearchParams();
+    const [title, setTitle] = useState(titulo || '');
+    const [description, setDescription] = useState(desc || '');
+    const [date, setDate] = useState(data || '');
 
     return (
         <SafeAreaView style={styles.container}>

@@ -1,13 +1,36 @@
 import { theme } from '@/constants/theme'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 import React, { useState } from 'react'
-import { Pressable, Text, TextInput, View } from 'react-native'
+import { Alert, Pressable, Text, TextInput, View } from 'react-native'
 import { styles } from './styles'
 import { router } from 'expo-router'
+import { createUserHandle } from '@/utils/createUserHandle'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 export default function CadastroView() {
-    const [user, setUser] = useState('');
+    const [username, setUser] = useState('');
     const [password, setPassword] = useState('');
+
+    const handleRegister = async () => {
+        const user = { password, tasks: [] };
+        await AsyncStorage.setItem(username, JSON.stringify(user));
+        router.push('/Login');
+      };
+
+    // const cadastroUsuarioHandler = async () => {
+    //     const result = await createUserHandle(user, password).then(
+    //         (resultado) => {
+    //             if (resultado) {
+    //                 Alert.alert('Usuário cadastrado com sucesso.')
+    //                 router.navigate('Login');
+    //             }
+    //             else
+    //                 Alert.alert('Usuário já cadastrado.')
+    //         }
+    //     )
+    // }
+
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -41,7 +64,7 @@ export default function CadastroView() {
                         style={styles.input}
                         onChangeText={(value) => setPassword(value)}
                     />
-                    <Pressable style={styles.loginButtom} onPress={() => { }}>
+                    <Pressable style={styles.loginButtom} onPress={handleRegister}>
                         <Text style={styles.buttonText}>Cadastrar</Text>
                     </Pressable>
                 </View>
